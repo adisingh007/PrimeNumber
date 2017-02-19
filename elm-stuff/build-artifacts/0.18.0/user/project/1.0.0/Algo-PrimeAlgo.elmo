@@ -1,0 +1,75 @@
+var _user$project$Algo_PrimeAlgo$incrBy2 = function (num) {
+	return num + 2;
+};
+var _user$project$Algo_PrimeAlgo$incr = function (num) {
+	return num + 1;
+};
+var _user$project$Algo_PrimeAlgo$isDivisible = F2(
+	function (quotient, divisor) {
+		return _elm_lang$core$Native_Utils.eq(
+			A2(_elm_lang$core$Basics_ops['%'], quotient, divisor),
+			0) ? true : false;
+	});
+var _user$project$Algo_PrimeAlgo$Maybe = {ctor: 'Maybe'};
+var _user$project$Algo_PrimeAlgo$No = {ctor: 'No'};
+var _user$project$Algo_PrimeAlgo$Yes = {ctor: 'Yes'};
+var _user$project$Algo_PrimeAlgo$check = F2(
+	function (divisor, quotient) {
+		check:
+		while (true) {
+			if (_elm_lang$core$Native_Utils.eq(divisor, quotient)) {
+				return _user$project$Algo_PrimeAlgo$Yes;
+			} else {
+				if (A2(_user$project$Algo_PrimeAlgo$isDivisible, quotient, divisor)) {
+					return _user$project$Algo_PrimeAlgo$No;
+				} else {
+					var _v0 = _user$project$Algo_PrimeAlgo$incrBy2(divisor),
+						_v1 = quotient;
+					divisor = _v0;
+					quotient = _v1;
+					continue check;
+				}
+			}
+		}
+	});
+var _user$project$Algo_PrimeAlgo$isPrime = function (num) {
+	return (_elm_lang$core$Native_Utils.cmp(num, 1) < 0) ? _user$project$Algo_PrimeAlgo$No : (_elm_lang$core$Native_Utils.eq(num, 1) ? _user$project$Algo_PrimeAlgo$Maybe : (_elm_lang$core$Native_Utils.eq(num, 2) ? _user$project$Algo_PrimeAlgo$Yes : (A2(_user$project$Algo_PrimeAlgo$isDivisible, num, 2) ? _user$project$Algo_PrimeAlgo$No : A2(_user$project$Algo_PrimeAlgo$check, 3, num))));
+};
+var _user$project$Algo_PrimeAlgo$createList = F3(
+	function (start, end, primeNumbers) {
+		createList:
+		while (true) {
+			if (_elm_lang$core$Native_Utils.cmp(start, end) > 0) {
+				return primeNumbers;
+			} else {
+				if (_elm_lang$core$Native_Utils.eq(
+					_user$project$Algo_PrimeAlgo$isPrime(start),
+					_user$project$Algo_PrimeAlgo$Yes)) {
+					var _v2 = _user$project$Algo_PrimeAlgo$incr(start),
+						_v3 = end,
+						_v4 = {ctor: '::', _0: start, _1: primeNumbers};
+					start = _v2;
+					end = _v3;
+					primeNumbers = _v4;
+					continue createList;
+				} else {
+					var _v5 = _user$project$Algo_PrimeAlgo$incr(start),
+						_v6 = end,
+						_v7 = primeNumbers;
+					start = _v5;
+					end = _v6;
+					primeNumbers = _v7;
+					continue createList;
+				}
+			}
+		}
+	});
+var _user$project$Algo_PrimeAlgo$getPrimeNumbers = F2(
+	function (start, end) {
+		return _elm_lang$core$List$reverse(
+			A3(
+				_user$project$Algo_PrimeAlgo$createList,
+				start,
+				end,
+				{ctor: '[]'}));
+	});
